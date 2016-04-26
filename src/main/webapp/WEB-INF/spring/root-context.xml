@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/tx 
+  http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+
+
+    <context:component-scan base-package="com.eshopping" />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/eshopping" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.eshopping.model" />
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10240000" />
+    </bean>
+
+    <!-- Set default mail properties -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="465" />
+        <property name="protocol" value="smtps" />
+        <property name="username" value="april2016group1@gmail.com" />
+        <property name="password" value="april2016" />
+        <property name="javaMailProperties">
+            <props>
+                <!-- Use SMTP transport protocol -->
+                <prop key="mail.smtps.auth">true</prop>
+                <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+                <prop key="mail.smtps.starttls.enable">true</prop>
+                <!-- Use TLS to encrypt communication with SMTP server -->
+                <prop key="mail.smtps.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+        
+    <!-- pre-configured messages are ready to send -->
+    <bean id="alertMailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="april2016group1@gmail.com"></property>
+        <property name="to" value="april2016group1@gmail.com"></property>
+        <property name="subject" value="Alert - Exception occurred. Please investigate!"/>
+    </bean>
+
+    <!-- encryption -->
+    <bean id="encryptor" class="com.eshopping.service.encryptionService"></bean>
+</beans>

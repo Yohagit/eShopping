@@ -1,0 +1,37 @@
+package com.eshopping.controller;
+
+/**
+ *
+ * @author Tunlaya
+ */
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
+
+import com.eshopping.model.Admin;
+import com.eshopping.model.SystemUser;
+import com.eshopping.service.AdminService;
+import com.eshopping.service.SystemUserService;
+
+@Component
+public class StartupController implements ApplicationListener<ContextRefreshedEvent> {
+	@Autowired
+	private AdminService adminService;
+	@Autowired
+	private SystemUserService userService;
+
+	@Override
+	public void onApplicationEvent(final ContextRefreshedEvent event) {
+		System.out.println("Initialize admin user ");
+		SystemUser user = userService.checkLogin("admin", "123");
+		if (user == null) {
+			Admin c = new Admin();
+			c.setEmail("admin");
+			c.setPassword("123");
+			c.setRole("admin");
+			c.setUsername("admin");
+			adminService.addAdmin(c);
+		}
+	}
+}

@@ -1,0 +1,15 @@
+package com.eshopping.service;
+
+import java.util.ArrayList;
+import com.eshopping.model.Order;
+
+public interface OrderService {
+	public ArrayList<Order> getOrdersByCustomer(int custId);
+
+	public ArrayList<Order> getAllOrders();
+
+	public void addOrder(Order o);
+	
+	public ArrayList<Order> getOrdersByVendor(int vendorId);
+
+}

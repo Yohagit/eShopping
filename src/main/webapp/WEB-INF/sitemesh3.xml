@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mapping path="/*" decorator="/WEB-INF/decorators/defaultDecorator.jsp" /> 
+	<mapping path="/" decorator="/WEB-INF/decorators/homeDecorator.jsp" />
+	<mapping path="/logout" decorator="/WEB-INF/decorators/homeDecorator.jsp" />
+
+	<mapping path="/vendor/add" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+	<mapping path="/cart" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+	<mapping path="/cart/payment" decorator="/WEB-INF/decorators/defaultDecorator.jsp" />
+
+	<mapping path="/admin/*" decorator="/WEB-INF/decorators/vendorDecorator.jsp" />
+	<mapping path="/error/*" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+	<mapping path="/admin/vendor/waiting" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+
+	<!--<mapping path="/registration/*" decorator="/WEB-INF/decorators/defaultDecorator.jsp" />-->
+
+        
+	<mapping path="/admin/system" decorator="/WEB-INF/decorators/adminDecorator.jsp" />
+	<mapping path="/admin/system/*" decorator="/WEB-INF/decorators/adminDecorator.jsp" />
+	<mapping path="/registration" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+	<mapping path="/registration/*" decorator="/WEB-INF/decorators/registrationDecorator.jsp" />
+        <mapping path="/product/search_all" decorator="/WEB-INF/decorators/defaultDecorator.jsp" /> 
+        
+
+	<mapping path="/resources/*" exclue="true" />
+</sitemesh>
